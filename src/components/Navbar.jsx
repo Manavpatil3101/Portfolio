@@ -42,12 +42,12 @@ export default function Navbar() {
     return () => window.removeEventListener('mousedown', handleClick)
   }, [open])
 
-  // Lock page scroll when menu open
+  // Lock body scroll when menu is open (fixed for mobile)
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden'
+      document.body.classList.add('overflow-hidden')
     } else {
-      document.body.style.overflow = ''
+      document.body.classList.remove('overflow-hidden')
     }
   }, [open])
 
