@@ -1,208 +1,134 @@
-// components/Navbar.jsx
-import { useState, useEffect, useCallback } from 'react'
+'use client' // Safe for Next.js; ignored by Vite or CRA
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+import { useState, useEffect, useRef } from 'react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+
+const navItems = ['Home', 'About', 'Skills', 'Projects', 'Experience', 'Education', 'Contact']
+
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
+  const [open, setOpen] = useState(false)
+  const panelRef = useRef(null)
+  const buttonRef = useRef(null)
 
-  const navItems = ['Home', 'About', 'Skills', 'Projects', 'Experience', 'Education', 'Contact']
-
-  // Throttled scroll handler
+  // Detect scroll for navbar background
   useEffect(() => {
-    let ticking = false
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 50)
-          updateActiveSection()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    // Set initial active section
-    updateActiveSection()
-    
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Update active section based on scroll position
-  const updateActiveSection = useCallback(() => {
-    const sections = navItems.map(item => item.toLowerCase())
-    const scrollPosition = window.scrollY + 100
-
-    for (const section of sections) {
-      const element = document.getElementById(section)
-      if (element) {
-        const offsetTop = element.offsetTop
-        const offsetBottom = offsetTop + element.offsetHeight
-
-        if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-          setActiveSection(section)
-          break
-        }
-      }
-    }
-  }, [navItems])
-
-  const scrollToSection = useCallback((sectionName) => {
-    const sectionId = sectionName.toLowerCase()
-    
-    try {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        // Calculate offset for fixed navbar
-        const navbarHeight = 80
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        })
-      } else {
-        console.warn(`Section with id '${sectionId}' not found`)
-        // Fallback: scroll to top if section not found
-        if (sectionId === 'home') {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-      }
-    } catch (error) {
-      console.error('Error scrolling to section:', error)
-    }
-    
-    setIsOpen(false)
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  // Close mobile menu when clicking outside
+  // Close menu if user clicks outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest('nav')) {
-        setIsOpen(false)
+    const handleClick = (e) => {
+      if (!open) return
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(e.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setOpen(false)
       }
     }
+    window.addEventListener('mousedown', handleClick)
+    return () => window.removeEventListener('mousedown', handleClick)
+  }, [open])
 
-    if (isOpen) {
-      document.addEventListener('click', handleClickOutside)
+  // Lock page scroll when menu open
+  useEffect(() => {
+    if (open) {
       document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = ''
     }
+  }, [open])
 
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-      document.body.style.overflow = 'unset'
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId.toLowerCase())
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+      setOpen(false)
     }
-  }, [isOpen])
-
-  // Close mobile menu on escape key
-  useEffect(() => {
-    const handleEscapeKey = (event) => {
-      if (event.key === 'Escape') {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener('keydown', handleEscapeKey)
-    return () => document.removeEventListener('keydown', handleEscapeKey)
-  }, [])
+  }
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
-    }`}>
+    <nav
+      className={`fixed top-0 w-full z-[9999] transition-all duration-300 ${
+        scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <div 
-            className="font-bold text-xl text-gray-800 cursor-pointer hover:text-accent transition-colors"
+          <div
+            className="font-bold text-xl text-primary cursor-pointer select-none"
             onClick={() => scrollToSection('Home')}
-            data-aos="fade-right"
           >
             Manav Patil
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
-            {navItems.map((item, index) => {
-              const sectionId = item.toLowerCase()
-              const isActive = activeSection === sectionId
-              
-              return (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item)}
-                  className={`transition-all duration-300 font-medium relative ${
-                    isActive 
-                      ? 'text-accent font-semibold' 
-                      : 'text-gray-600 hover:text-accent'
-                  }`}
-                  data-aos="fade-down"
-                  data-aos-delay={index * 100}
-                >
-                  {item}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent transform translate-y-2"></span>
-                  )}
-                </button>
-              )
-            })}
+            {navItems.map((item, index) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item)}
+                className="text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium"
+                data-aos="fade-down"
+                data-aos-delay={index * 100}
+              >
+                {item}
+              </button>
+            ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          {/* Mobile Hamburger */}
+          {/* <div className="md:hidden flex items-center">
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-accent transition-colors p-2 rounded-lg hover:bg-gray-100"
-              aria-label="Toggle menu"
-              aria-expanded={isOpen}
+              ref={buttonRef}
+              onClick={() => setOpen(!open)}
+              aria-controls="mobile-menu"
+              aria-expanded={open}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
+              {open ? (
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+              )}
             </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-lg transition-all duration-300 overflow-hidden ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="px-4 py-6 space-y-3">
-            {navItems.map((item, index) => {
-              const sectionId = item.toLowerCase()
-              const isActive = activeSection === sectionId
-              
-              return (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item)}
-                  className={`block w-full text-left transition-all duration-300 py-3 px-4 rounded-lg font-medium ${
-                    isActive
-                      ? 'text-accent bg-accent/10 border-l-4 border-accent'
-                      : 'text-gray-600 hover:text-accent hover:bg-gray-50'
-                  }`}
-                  style={{
-                    animationDelay: isOpen ? `${index * 50}ms` : '0ms'
-                  }}
-                >
-                  {item}
-                </button>
-              )
-            })}
-          </div>
+          </div> */}
         </div>
       </div>
+
+      {/* Mobile Menu Panel */}
+      {/* <div
+        id="mobile-menu"
+        ref={panelRef}
+        className={`md:hidden fixed top-16 left-0 right-0 bg-white text-gray-700 shadow-lg border-t border-gray-100 transition-all duration-300 ease-in-out z-[9998]
+          ${open ? 'translate-y-0 opacity-100' : '-translate-y-3 opacity-0 pointer-events-none'}`}
+      >
+        <div className="px-4 py-3 space-y-2">
+          {navItems.map((item) => (
+            <button
+              key={item}
+              onClick={() => scrollToSection(item)}
+              className="block w-full text-left py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div> */}
     </nav>
   )
 }
-
-export default Navbar
