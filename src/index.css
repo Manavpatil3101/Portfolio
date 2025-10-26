@@ -30,22 +30,3 @@ body {
 }
 
 
-/* Add to your globals.css or tailwind.css */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Ensure proper scroll padding for fixed navbar */
-section {
-  scroll-margin-top: 80px;
-}
-
-/* Fix for mobile scrolling */
-body {
-  overflow-x: hidden;
-}
-
-/* Ensure Heroicons are properly sized */
-svg {
-  display: block;
-}
