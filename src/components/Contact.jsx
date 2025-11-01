@@ -29,7 +29,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative overflow-x-hidden min-h-screen py-20 bg-slate-50"
+      className="relative overflow-x-hidden py-20 bg-slate-50"
     >
       {/* Ballpit background */}
       <div
