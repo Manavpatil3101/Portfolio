@@ -26,7 +26,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-dvh bg-slate-50 font-inter overflow-x-hidden overflow-y-auto">
+    <div className="bg-slate-50 font-inter overflow-x-hidden overflow-y-auto min-h-dvh">
       {/* <Navbar /> */}
       <Hero />
       <About />
