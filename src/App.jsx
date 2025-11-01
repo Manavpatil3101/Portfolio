@@ -20,22 +20,6 @@ function App() {
       mirror: false
     })
 
-    // Mobile scroll fix
-    const enableMobileScroll = () => {
-      document.documentElement.style.overflow = 'auto'
-      document.body.style.overflow = 'auto'
-      document.body.style.height = 'auto'
-      document.body.style.position = 'relative'
-      document.body.style.webkitOverflowScrolling = 'touch'
-    }
-
-    enableMobileScroll()
-    window.addEventListener('load', enableMobileScroll)
-    
-    return () => {
-      window.removeEventListener('load', enableMobileScroll)
-    }
-
 
   }, [])
 
