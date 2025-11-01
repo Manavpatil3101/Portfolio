@@ -14,8 +14,6 @@ import Contact from './components/Contact'
 function App() {
   useEffect(() => {
 
-    document.body.style.overflowY = "auto"
-  document.documentElement.style.overflowY = "auto"
 
     AOS.init({
       duration: 1000,
@@ -29,7 +27,7 @@ function App() {
   }, [])
 
   return (
-    <div className="bg-slate-50 font-inter">
+    <div className="bg-slate-50 font-inter min-h-[100svh]">
       {/* <Navbar /> */}
       <Hero />
       <About />
