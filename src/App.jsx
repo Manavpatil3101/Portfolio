@@ -14,18 +14,18 @@ import Contact from './components/Contact'
 function App() {
   useEffect(() => {
 
-    document.body.style.overflowY = "auto"
-  document.documentElement.style.overflowY = "auto"
+  //   document.body.style.overflowY = "auto"
+  // document.documentElement.style.overflowY = "auto"
 
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false,
-      disableMutationObserver: true,
-      disable: window.innerWidth < 1024,
-      // disable: window.innerWidth < 1024, 
-    })
+  //   AOS.init({
+  //     duration: 1000,
+  //     easing: 'ease-in-out',
+  //     once: true,
+  //     mirror: false,
+  //     disableMutationObserver: true,
+  //     disable: window.innerWidth < 1024,
+  //     // disable: window.innerWidth < 1024, 
+  //   })
 
 
   }, [])
