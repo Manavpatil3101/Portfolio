@@ -1,6 +1,7 @@
 // App.jsx
 import { useEffect } from 'react'
-// import AOS from 'aos'
+import AOS from 'aos'
+import 'aos/dist/aos.css';
 // import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,13 +16,15 @@ function App() {
   useEffect(() => {
 
 
-    // AOS.init({
-    //   duration: 1000,
-    //   easing: 'ease-in-out',
-    //   once: true,
-    //   mirror: false,
-      
-    // })
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: false,
+      mirror: true,
+      disable: function() {
+        return window.innerWidth < 1024; // disable on mobile
+      }
+    })
 
 
   }, [])
