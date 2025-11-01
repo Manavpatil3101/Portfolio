@@ -2,8 +2,8 @@ import TextType from './TextType';
 
 const Hero = () => {
   return (
-    <section id="home" className="pt-24 pb-32 flex items-center justify-center relative">
-      <div className="absolute inset-0 abstract-shape pointer-events-none -z-10"></div>
+    <section id="home" className="min-h-screen flex items-center justify-center relative">
+      <div className="absolute inset-0 abstract-shape"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
