@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="bg-slate-50 font-inter">
       {/* <Navbar /> */}
-      <Hero />
+      {/* <Hero /> */}
       <About />
       <Skills />
       <Projects />
