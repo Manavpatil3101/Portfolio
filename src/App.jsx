@@ -17,14 +17,16 @@ function App() {
       duration: 1000,
       easing: 'ease-in-out',
       once: true,
-      mirror: false
+      mirror: false,
+      disableMutationObserver: true,
+      // disable: window.innerWidth < 1024, 
     })
 
 
   }, [])
 
   return (
-    <div className="bg-slate-50 font-inter overflow-x-hidden overflow-y-auto">
+    <div className="min-h-dvh bg-slate-50 font-inter overflow-x-hidden overflow-y-auto">
       {/* <Navbar /> */}
       <Hero />
       <About />
