@@ -19,10 +19,28 @@ function App() {
       once: true,
       mirror: false
     })
+
+    // Mobile scroll fix
+    const enableMobileScroll = () => {
+      document.documentElement.style.overflow = 'auto'
+      document.body.style.overflow = 'auto'
+      document.body.style.height = 'auto'
+      document.body.style.position = 'relative'
+      document.body.style.webkitOverflowScrolling = 'touch'
+    }
+
+    enableMobileScroll()
+    window.addEventListener('load', enableMobileScroll)
+    
+    return () => {
+      window.removeEventListener('load', enableMobileScroll)
+    }
+
+
   }, [])
 
   return (
-    <div className="min-h-screen h-auto overflow-y-auto bg-slate-50 font-inter">
+    <div className="min-h-screen h-auto bg-slate-50 font-inter">
       {/* <Navbar /> */}
       <Hero />
       <About />
