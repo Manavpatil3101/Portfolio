@@ -18,6 +18,14 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; 
+}
+
+html, body, #root {
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .gradient-bg {

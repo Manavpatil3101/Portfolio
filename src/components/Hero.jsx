@@ -2,7 +2,7 @@ import TextType from './TextType';
 
 const Hero = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-x-hidden overflow-y-auto">
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-x-hidden">
       <div className="absolute inset-0 abstract-shape"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20">
