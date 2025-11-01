@@ -22,9 +22,7 @@ function App() {
       easing: 'ease-in-out',
       once: true,
       mirror: false,
-      disableMutationObserver: true,
-      // disable: window.innerWidth < 1024,
-      // disable: window.innerWidth < 1024, 
+      
     })
 
 

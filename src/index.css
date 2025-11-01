@@ -22,9 +22,6 @@ body {
  
 }
 
-html, body {
-  overscroll-behavior-y: auto !important;
-}
 
 
 .gradient-bg {
