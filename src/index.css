@@ -15,7 +15,6 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100%;
 }
 
 body {
@@ -25,7 +24,6 @@ body {
 
 html, body {
   overscroll-behavior-y: auto !important;
-  height: auto !important;
 }
 
 
