@@ -10,7 +10,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  touch-action: auto !important;
 }
 
 html {
@@ -34,3 +33,7 @@ body {
 }
 
 
+body {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
