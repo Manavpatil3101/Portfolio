@@ -18,6 +18,10 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
+  /* FIX: Ensure body allows scrolling and proper touch behavior */
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gradient-bg {
@@ -28,5 +32,3 @@ body {
   background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 20%),
               radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 20%);
 }
-
-

@@ -22,7 +22,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-slate-50 font-inter">
+    <div className="min-h-screen bg-slate-50 font-inter overflow-x-hidden">
       <Navbar />
       <Hero />
       <About />
