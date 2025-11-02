@@ -2,7 +2,7 @@
 // Component inspired by Kevin Levron:
 // https://x.com/soju22/status/1858925191671271801
 
-import Ballpit from './Ballpit';
+// import Ballpit from './Ballpit';
 
 const Contact = () => {
   const contactMethods = [
@@ -36,13 +36,13 @@ const Contact = () => {
         className="absolute inset-0 z-0 hidden lg:block"
         style={{ position: "absolute", overflow: "hidden" }}
       >
-        <Ballpit
+        {/* <Ballpit
           count={60}
           gravity={0.1}
           friction={0.997}
           wallBounce={0.95}
           followCursor={false}
-        />
+        /> */}
       </div>
 
       {/* Optional gradient overlays for subtle depth */}
